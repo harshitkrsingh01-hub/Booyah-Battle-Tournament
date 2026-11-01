@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080a10">
+<title>BOOYAH BATTLE — Free Fire Tournament Platform</title>
+<style>
+:root{--bg:#070910;--panel:rgba(12,16,25,.88);--line:rgba(151,169,198,.2);--red:#ff173d;--red2:#d90c2e;--muted:#a9b6ca;--white:#f5f7fb;--blue:#8da8d0}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:84px}body{margin:0;background:var(--bg);color:var(--white);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;line-height:1.5;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:-30px;z-index:-2;background:linear-gradient(100deg,rgba(4,6,12,.96),rgba(6,9,17,.76)),url('https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=2000&q=85') center/cover;filter:blur(9px);transform:scale(1.04)}
+body:after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 80% 15%,rgba(255,23,61,.12),transparent 35%),linear-gradient(180deg,rgba(4,6,12,.15),#070910 72%)}
+a{color:inherit;text-decoration:none}button,input,select{font:inherit}.wrap{width:min(1180px,calc(100% - 36px));margin:auto}
+header{height:76px;position:sticky;top:0;z-index:20;background:rgba(5,7,13,.88);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,23,61,.4)}
+.nav{height:100%;display:flex;align-items:center;gap:28px}.brand{display:flex;align-items:center;gap:10px;font-weight:950;font-style:italic;letter-spacing:-1px;font-size:23px;line-height:.9;white-space:nowrap}.brand-mark{color:var(--red);font-size:43px;line-height:.8;transform:skew(-12deg)}.brand span:last-child em{display:block;color:var(--red);font-style:italic}.navlinks{display:flex;align-items:center;gap:20px;margin:auto;font-size:13px;color:#d3dbea}.navlinks a:hover{color:var(--red)}.nav-actions{display:flex;gap:10px}.btn{border:1px solid transparent;border-radius:7px;padding:11px 17px;font-weight:800;font-size:12px;letter-spacing:.3px;cursor:pointer;transition:.2s;display:inline-flex;align-items:center;justify-content:center;gap:9px}.btn-primary{background:var(--red);color:#fff;box-shadow:0 7px 25px rgba(255,23,61,.16)}.btn-primary:hover{background:#ff3657;transform:translateY(-1px)}.btn-ghost{background:rgba(255,255,255,.03);border-color:#566175;color:#fff}.btn-ghost:hover{border-color:var(--red)}.menu-toggle{display:inline-flex;align-items:center;background:none;color:white;border:1px solid var(--line);border-radius:7px;padding:8px 10px}
+.hero{min-height:425px;position:relative;display:flex;align-items:center;border-bottom:1px solid rgba(255,23,61,.45);overflow:hidden;background:linear-gradient(90deg,rgba(5,7,13,.95) 0%,rgba(5,7,13,.8) 38%,rgba(5,7,13,.12) 100%),url('https://images.unsplash.com/photo-1560253023-3ec5d502959f?auto=format&fit=crop&w=1800&q=85') center 40%/cover}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#070910 0%,transparent 20%,transparent 82%,rgba(5,7,13,.2));pointer-events:none}.hero-content{position:relative;z-index:1;padding:62px 0 70px;max-width:570px}.eyebrow{color:#d9e2f2;font-size:11px;letter-spacing:2.8px;font-weight:800;text-transform:uppercase}.hero h1{font-size:clamp(48px,7vw,82px);letter-spacing:-3px;line-height:.91;margin:18px 0 16px;font-weight:950}.hero h1 span{display:block;color:var(--red)}.hero-sub{color:#c2ccdc;max-width:430px;font-size:15px}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}.hero-pills{display:flex;gap:18px;margin-top:30px;color:#dbe3f0;font-size:11px;letter-spacing:1.5px;font-weight:800}.hero-pills span:before{content:"";display:inline-block;width:6px;height:6px;background:var(--red);margin:0 8px 1px 0;transform:rotate(45deg)}
+section{padding:54px 0}.section-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:24px}.kicker{color:var(--red);font-weight:900;letter-spacing:2px;font-size:10px;text-transform:uppercase}.section-head h2{font-size:clamp(27px,4vw,36px);line-height:1.1;margin:7px 0 0;letter-spacing:-1px}.section-head h2 span{color:var(--red)}.section-head p{color:var(--muted);font-size:13px;margin:8px 0 0}.live-chip{border:1px solid rgba(255,23,61,.45);border-radius:100px;padding:7px 12px;font-size:10px;font-weight:800;letter-spacing:1px;color:#ff8094;white-space:nowrap}.tournament-group{border:1px solid var(--line);border-radius:13px;background:linear-gradient(115deg,rgba(12,17,27,.92),rgba(8,11,18,.8));overflow:hidden;margin:16px 0;display:grid;grid-template-columns:270px 1fr;box-shadow:0 18px 50px rgba(0,0,0,.12)}.group-art{min-height:220px;position:relative;background-size:cover;background-position:center}.group-art:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(5,7,13,.9),transparent 70%),linear-gradient(90deg,transparent,rgba(8,11,18,.15))}.group-art.full{background-image:url('https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=85')}.group-art.clash{background-image:url('https://images.unsplash.com/photo-1547394765-185e1e68f34e?auto=format&fit=crop&w=800&q=85')}.art-label{position:absolute;z-index:1;left:18px;bottom:16px}.art-label strong{display:block;font-size:20px;letter-spacing:-.4px}.art-label small{color:#c2ccdc;font-size:11px}.group-body{padding:22px 20px}.group-title{display:flex;justify-content:space-between;gap:12px;align-items:start}.group-title h3{font-size:18px;margin:0 0 4px}.group-title p{font-size:12px;color:var(--muted);margin:0 0 17px}.tag{font-size:9px;color:#ff9cac;border:1px solid rgba(255,23,61,.3);border-radius:5px;padding:5px 7px;white-space:nowrap}.mode-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.mode-card{background:rgba(4,7,13,.56);border:1px solid #293448;border-left:3px solid var(--red);border-radius:9px;padding:15px 13px;min-width:0;transition:.2s}.mode-card:hover{border-color:rgba(255,23,61,.75);transform:translateY(-2px);background:rgba(255,23,61,.05)}.mode-top{display:flex;align-items:center;gap:10px}.mode-icon{font-size:22px;min-width:27px}.mode-card h4{margin:0;font-size:12px;letter-spacing:.3px}.mode-card p{color:var(--muted);font-size:11px;margin:2px 0 14px}.mode-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px}.mode-bottom span{color:#aab8cc;font-size:10px}.text-btn{border:0;background:none;color:var(--red);font-weight:800;font-size:10px;cursor:pointer;padding:0}.text-btn:hover{color:#ff8ca0}
+.features{padding:5px 0 30px}.feature-row{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--line);border-radius:12px;background:rgba(9,13,21,.8);padding:22px 8px}.feature{text-align:center;padding:8px;border-right:1px solid var(--line)}.feature:last-child{border:0}.feature-icon{font-size:25px;color:var(--red)}.feature strong{display:block;font-size:10px;margin:8px 0 3px;letter-spacing:.5px}.feature small{color:var(--muted);font-size:10px}
+.prize{border:1px solid rgba(255,23,61,.6);border-radius:13px;overflow:hidden;display:grid;grid-template-columns:1.2fr 1fr .9fr;align-items:center;gap:18px;padding:23px 26px;background:linear-gradient(100deg,rgba(66,10,23,.78),rgba(8,12,20,.94)),url('https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1400&q=70') center/cover}.prize-title{font-size:26px;font-weight:900;font-style:italic}.prize-title small{display:block;font-size:11px;font-style:normal;color:var(--muted);font-weight:500}.prize-value{background:rgba(5,8,14,.8);border:1px solid var(--line);border-radius:9px;padding:16px 20px}.prize-value small{color:#c2ccdc;font-size:11px}.prize-value strong{display:block;font-size:31px;line-height:1.2}.prize-value strong span{color:var(--red)}.prize-value em{font-size:10px;color:var(--muted);font-style:normal}.prize-action{text-align:right}.prize-action small{display:block;letter-spacing:1px;font-size:10px;margin-bottom:12px}
+.cta{margin-top:54px;border-top:1px solid rgba(255,23,61,.45);border-bottom:1px solid rgba(255,23,61,.45);background:linear-gradient(90deg,rgba(6,8,14,.9),rgba(83,7,25,.6),rgba(6,8,14,.9)),url('https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1600&q=80') center/cover;text-align:center;padding:38px 18px}.cta h2{font-size:30px;font-weight:950;margin:0 0 6px}.cta h2 span{color:var(--red)}.cta p{font-size:12px;color:#c7d0de;margin:0 0 18px}
+footer{padding:30px 0 16px;background:rgba(4,6,11,.8)}.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:24px;padding-bottom:25px}.footer-title{font-size:12px;font-weight:900;margin-bottom:12px}.footer-links{display:grid;gap:7px;color:var(--muted);font-size:11px}.footer-links a:hover{color:var(--red)}.footer-brand p{color:var(--muted);font-size:11px}.copyright{border-top:1px solid var(--line);padding-top:14px;display:flex;justify-content:space-between;gap:12px;color:#8e9cb2;font-size:10px}
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.76);backdrop-filter:blur(8px);z-index:50;display:none;align-items:center;justify-content:center;padding:18px}.modal-backdrop.open{display:flex}.modal{width:min(520px,100%);max-height:90vh;overflow:auto;background:#0b101a;border:1px solid #354158;border-radius:14px;padding:25px;box-shadow:0 30px 100px #000}.modal-head{display:flex;justify-content:space-between;align-items:start;gap:15px}.modal h3{font-size:23px;margin:0}.modal p{color:var(--muted);font-size:13px}.close{border:1px solid var(--line);background:#141b28;color:white;border-radius:7px;padding:5px 10px;cursor:pointer}.form-grid{display:grid;gap:13px;margin-top:18px}.field label{display:block;color:#d7dfec;font-size:11px;font-weight:800;margin-bottom:6px}.field input,.field select{width:100%;background:#070a11;border:1px solid #344057;border-radius:7px;color:#fff;padding:12px;outline:none}.field input:focus,.field select:focus{border-color:var(--red)}.form-note{font-size:10px!important;color:#93a2b9!important}.success{display:none;border:1px solid rgba(55,211,135,.4);background:rgba(55,211,135,.08);border-radius:8px;padding:12px;color:#a6f2cb;font-size:12px;margin-top:14px}.success.show{display:block}.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);background:#111927;border:1px solid var(--line);padding:12px 16px;border-radius:9px;z-index:70;opacity:0;pointer-events:none;transition:.25s;font-size:12px}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:900px){.navlinks{gap:14px}.tournament-group{grid-template-columns:220px 1fr}.mode-grid{gap:8px}.mode-card{padding:12px 9px}.mode-top{gap:6px}.mode-card h4{font-size:10px}.prize{grid-template-columns:1fr 1fr}.prize-action{grid-column:1/-1;text-align:left}.footer-grid{grid-template-columns:1.3fr 1fr 1fr}}
+@media(max-width:680px){header{height:66px}.wrap{width:min(100% - 26px,1180px)}.nav{gap:12px}.brand{font-size:19px}.brand-mark{font-size:36px}.nav-actions{gap:6px}.nav-actions .acct{max-width:88px}.nav-actions .hide-m{display:none}.fab{right:14px;bottom:14px;width:54px;height:54px}.nav-actions .btn{padding:9px 10px;font-size:10px}.menu-toggle{display:block}.navlinks{display:none;position:absolute;top:65px;left:0;right:0;padding:16px 22px;background:rgba(5,7,13,.97);border-bottom:1px solid var(--line);flex-direction:column;align-items:stretch;gap:0}.navlinks.open{display:flex}.navlinks a{padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06)}.hero{min-height:420px;background-position:60% center}.hero-content{padding:55px 0}.hero h1{font-size:56px}.hero-sub{max-width:310px;font-size:13px}.hero-pills{gap:9px;font-size:9px}.section-head{align-items:start;flex-direction:column}.tournament-group{grid-template-columns:1fr}.group-art{min-height:165px}.group-body{padding:17px 13px}.mode-grid{grid-template-columns:1fr}.mode-card{padding:13px}.mode-card h4{font-size:12px}.mode-bottom{justify-content:flex-start;gap:16px}.mode-bottom .text-btn{margin-left:auto}.feature-row{grid-template-columns:repeat(2,1fr);padding:10px}.feature{border-right:0;border-bottom:1px solid var(--line);padding:15px 7px}.feature:nth-last-child(-n+1){grid-column:1/-1;border-bottom:0}.feature:nth-child(2n){border-left:1px solid var(--line)}.prize{grid-template-columns:1fr;padding:20px}.prize-action{grid-column:auto}.prize-action .btn{width:100%}.footer-grid{grid-template-columns:1fr 1fr}.footer-brand{grid-column:1/-1}.copyright{flex-direction:column}.cta h2{font-size:26px}section{padding:40px 0}}
+.modal.wide{width:min(780px,100%)}.mtabs{display:flex;gap:8px;margin:18px 0 14px;flex-wrap:wrap}.mtab{background:#070a11;border:1px solid #344057;color:#c7d0de;border-radius:100px;padding:8px 15px;font-size:11px;font-weight:800;letter-spacing:.4px;cursor:pointer;transition:.2s}.mtab:hover{border-color:var(--red)}.mtab.active{background:var(--red);border-color:var(--red);color:#fff}.mlist{display:grid;gap:12px}.match{background:rgba(4,7,13,.7);border:1px solid #293448;border-left:3px solid var(--red);border-radius:10px;padding:15px;display:grid;grid-template-columns:1fr auto;gap:12px 16px;align-items:center}.match.is-full{border-left-color:#5b6579;opacity:.8}.match-top{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.match-no{font-size:10px;font-weight:900;letter-spacing:1.2px;color:var(--red)}.match h4{margin:0;font-size:15px}.badge{font-size:9px;font-weight:900;letter-spacing:.8px;border-radius:5px;padding:4px 7px;border:1px solid}.badge.open{color:#7ee2ae;border-color:rgba(55,211,135,.45);background:rgba(55,211,135,.08)}.badge.fast{color:#ffb86b;border-color:rgba(255,160,60,.5);background:rgba(255,160,60,.08)}.badge.full{color:#9aa6ba;border-color:#4a566b}.match-meta{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:9px;color:var(--muted);font-size:11px}.match-meta b{color:#e6ecf7;font-weight:700}.slot-bar{height:5px;border-radius:5px;background:#1a2231;margin-top:11px;overflow:hidden}.slot-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--red2),var(--red))}.slot-txt{font-size:10px;color:#93a2b9;margin-top:5px}.match-side{text-align:right;min-width:130px}.match-prize small{display:block;font-size:9px;letter-spacing:1px;color:var(--muted)}.match-prize strong{font-size:22px;color:#fff}.match-fee{font-size:11px;color:var(--muted);margin:2px 0 10px}.match-side .btn{width:100%;padding:9px 12px}.btn[disabled]{opacity:.45;cursor:not-allowed;transform:none!important}.m-note{font-size:10px;color:#93a2b9;margin:14px 0 0}
+.auth-switch{font-size:12px;color:var(--muted);margin:2px 0 0;text-align:center}.link-btn{background:none;border:0;color:var(--red);font-weight:800;cursor:pointer;padding:0;font-size:12px}.link-btn:hover{color:#ff8ca0}.msg{display:none;border-radius:8px;padding:11px 12px;font-size:12px;margin-top:14px}.msg.show{display:block}.msg.err{border:1px solid rgba(255,23,61,.5);background:rgba(255,23,61,.09);color:#ff9cac}.msg.ok{border:1px solid rgba(55,211,135,.4);background:rgba(55,211,135,.08);color:#a6f2cb}.msg.info{border:1px solid rgba(141,168,208,.4);background:rgba(141,168,208,.08);color:#c9d8f0}.sumbox{background:#070a11;border:1px solid #344057;border-radius:9px;padding:14px;margin-top:16px;display:grid;gap:8px;font-size:12px}.sumbox div{display:flex;justify-content:space-between;gap:14px}.sumbox span{color:var(--muted)}.sumbox b{text-align:right}.reglist{display:grid;gap:8px;margin-top:14px}.regitem{background:#070a11;border:1px solid #293448;border-left:3px solid var(--red);border-radius:8px;padding:10px 12px;font-size:12px}.regitem small{display:block;color:var(--muted);font-size:10px;margin-top:2px}.nav-actions .acct{max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.walbal{background:linear-gradient(110deg,rgba(255,23,61,.18),rgba(8,12,20,.9));border:1px solid rgba(255,23,61,.5);border-radius:11px;padding:16px 18px;margin-top:16px;display:flex;justify-content:space-between;align-items:center;gap:12px}.walbal small{display:block;font-size:10px;letter-spacing:1.2px;color:var(--muted);font-weight:800}.walbal strong{font-size:30px;line-height:1.15}.walbal em{font-style:normal;font-size:11px;color:var(--muted)}.demo-badge{font-size:9px;font-weight:900;letter-spacing:.8px;color:#ffb86b;border:1px solid rgba(255,160,60,.5);background:rgba(255,160,60,.08);border-radius:5px;padding:4px 7px;white-space:nowrap}.wsec{font-size:10px;letter-spacing:1.6px;font-weight:900;color:#d7dfec;margin:20px 0 9px}.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{background:#070a11;border:1px solid #344057;color:#fff;border-radius:8px;padding:10px 14px;font-weight:800;font-size:13px;cursor:pointer;transition:.15s}.chip:hover{border-color:var(--red)}.chip.sel{background:rgba(255,23,61,.16);border-color:var(--red)}.paygrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.pay{display:flex;align-items:center;gap:10px;background:#070a11;border:1px solid #344057;border-radius:9px;padding:11px;color:#fff;font-weight:700;font-size:12px;cursor:pointer;text-align:left;transition:.15s}.pay:hover{border-color:var(--red)}.pay.sel{background:rgba(255,23,61,.12);border-color:var(--red)}.pay i{width:28px;height:28px;border-radius:7px;display:grid;place-items:center;font-style:normal;font-weight:900;font-size:13px;color:#fff;flex:none}.txlist{display:grid;gap:7px;max-height:190px;overflow:auto}.tx{display:flex;justify-content:space-between;gap:10px;background:#070a11;border:1px solid #293448;border-radius:8px;padding:9px 11px;font-size:12px}.tx small{display:block;color:var(--muted);font-size:10px}.tx b.plus{color:#7ee2ae}.tx b.minus{color:#ff9cac}.coin{color:#ffc857}
+.fab{position:fixed;right:18px;bottom:18px;z-index:30;width:58px;height:58px;border-radius:50%;border:2px solid rgba(255,255,255,.18);background:linear-gradient(135deg,var(--red),var(--red2));color:#fff;font-size:25px;cursor:pointer;box-shadow:0 10px 30px rgba(255,23,61,.45),0 0 0 4px rgba(255,23,61,.12);display:grid;place-items:center;transition:.2s}.fab:hover{transform:scale(1.07)}.fab-badge{position:absolute;top:-4px;right:-4px;min-width:21px;height:21px;border-radius:11px;background:#fff;color:var(--red2);font-size:11px;font-weight:900;display:none;place-items:center;padding:0 5px;border:2px solid #070910}.fab-label{position:absolute;right:68px;background:#111927;border:1px solid var(--line);border-radius:7px;padding:6px 10px;font-size:11px;font-weight:700;white-space:nowrap;opacity:0;pointer-events:none;transition:.2s}.fab:hover .fab-label{opacity:1}
+.drawer-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:60;display:none}.drawer-backdrop.open{display:block}.drawer{position:absolute;top:0;right:0;bottom:0;width:min(340px,88vw);background:#0b101a;border-left:1px solid #354158;padding:18px 16px 28px;overflow:auto;animation:slidein .22s ease-out}@keyframes slidein{from{transform:translateX(100%)}to{transform:none}}.drawer-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.drawer-head strong{font-size:15px;letter-spacing:.5px}.d-title{font-size:10px;letter-spacing:1.6px;font-weight:900;color:var(--red);margin:20px 4px 8px}.d-item{display:flex;align-items:center;gap:12px;width:100%;background:none;border:0;border-bottom:1px solid rgba(255,255,255,.06);color:#fff;padding:13px 6px;font-size:14px;font-weight:700;cursor:pointer;text-align:left;border-radius:0}.d-item:hover{color:var(--red)}.d-item i{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;font-style:normal;font-size:16px;background:#141b28;flex:none}.d-item small{display:block;color:var(--muted);font-size:10px;font-weight:500}.d-item .go{margin-left:auto;color:var(--muted)}.m-only{display:none}
+.statrow{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}.stat{background:#070a11;border:1px solid #293448;border-radius:9px;padding:11px;text-align:center}.stat strong{display:block;font-size:20px}.stat small{font-size:9px;letter-spacing:.8px;color:var(--muted);font-weight:800}.rules{margin:0;padding:0;list-style:none;display:grid;gap:8px;counter-reset:r}.rules li{counter-increment:r;position:relative;background:#070a11;border:1px solid #293448;border-radius:9px;padding:10px 12px 10px 42px;font-size:12px;color:#d7dfec}.rules li:before{content:counter(r);position:absolute;left:11px;top:10px;width:21px;height:21px;border-radius:50%;background:var(--red);color:#fff;font-weight:900;font-size:11px;display:grid;place-items:center}.fine{font-size:10px;color:#93a2b9;margin:10px 0 0;line-height:1.6}.mm{background:#070a11;border:1px solid #293448;border-left:3px solid var(--red);border-radius:10px;padding:12px 13px}.mm-top{display:flex;justify-content:space-between;align-items:center;gap:10px}.mm-top b{font-size:14px}.mm small{color:var(--muted);font-size:11px}.cd{font-size:11px;color:#ffc857;margin-top:7px;font-weight:700}.room{font-size:10px;color:#93a2b9;margin-top:6px;border-top:1px dashed #293448;padding-top:6px}.mlist.two{grid-template-columns:1fr 1fr}
+.msec{margin-top:18px}.msec-h{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}.msec-h strong{font-size:12px;letter-spacing:1.4px;display:flex;align-items:center;gap:8px}.msec-h span{font-size:10px;font-weight:900;border-radius:100px;padding:3px 9px;border:1px solid #344057;color:#c7d0de}.dot{width:8px;height:8px;border-radius:50%;display:inline-block}.dot.live{background:#ff3b5c;box-shadow:0 0 0 0 rgba(255,59,92,.7);animation:pulse 1.4s infinite}.dot.up{background:#7ee2ae}.dot.done{background:#7d8aa0}@keyframes pulse{70%{box-shadow:0 0 0 7px rgba(255,59,92,0)}100%{box-shadow:0 0 0 0 rgba(255,59,92,0)}}.mm.live{border-left-color:#ff3b5c;background:rgba(255,59,92,.06)}.mm.done{border-left-color:#5b6579;opacity:.85}.mempty{background:#070a11;border:1px dashed #344057;border-radius:9px;padding:12px;font-size:12px;color:var(--muted)}.badge.live{color:#ff9cac;border-color:rgba(255,59,92,.6);background:rgba(255,59,92,.1)}.sumrow{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+@media(max-width:900px){.mlist.two{grid-template-columns:1fr}.navlinks{display:none}.m-only{display:flex}}
+@media(max-width:680px){.match{grid-template-columns:1fr}.match-side{text-align:left;display:grid;grid-template-columns:1fr 1fr;gap:4px 12px;align-items:center}.match-side .btn{grid-column:1/-1}.modal.wide{padding:18px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#home" aria-label="Booyah Battle home"><span class="brand-mark">B</span><span>BOOYAH<em>BATTLE</em></span></a>
+    <nav class="navlinks" id="navlinks"><a href="#home">Home</a><a href="#tournaments">Tournaments</a><a href="#freematches">Free Matches</a><a href="#prizes">Prize Pool</a><a href="#rules">Rules</a><a href="#about">About</a></nav>
+    <div class="nav-actions"><span id="navOut" style="display:flex;gap:10px"><button class="btn btn-ghost" onclick="openAuth('login')">Login</button><button class="btn btn-primary" onclick="openAuth('register')">Register</button></span><span id="navIn" style="display:none;gap:10px"><button class="btn btn-ghost" onclick="openAuth('wallet')" id="navCoins" aria-label="Wallet">🪙 0</button><button class="btn btn-ghost acct" onclick="openAuth('account')" id="navName">Player</button></span></div>
+    <button class="menu-toggle" aria-label="Open menu" onclick="openDrawer()">☰</button>
+  </div>
+</header>
+<main>
+<section class="hero" id="home">
+  <div class="wrap"><div class="hero-content">
+    <div class="eyebrow">India's ultimate Free Fire tournament platform</div>
+    <h1>BOOYAH <span>BATTLE</span></h1>
+    <div class="hero-pills"><span>PLAY</span><span>COMPETE</span><span>WIN</span></div>
+    <p class="hero-sub">Bring your squad. Prove your skills. Rise through the ranks. Your next battle starts here.</p>
+    <div class="hero-actions"><a class="btn btn-primary" href="#tournaments">Explore Tournaments <b>→</b></a><button class="btn btn-ghost" onclick="openAuth('register')">Create Account</button></div>
+    <div class="hero-pills"><span>FAIR PLAY</span><span>LIVE RESULTS</span><span>ALL SKILL LEVELS</span></div>
+  </div></div>
+</section>
+<section id="tournaments">
+  <div class="wrap">
+    <div class="section-head"><div><div class="kicker">Our tournaments</div><h2>CHOOSE <span>YOUR BATTLE</span></h2><p>Different modes. Same goal — Victory! Tap “View Matches” to see and join matches.</p></div><div class="live-chip">● MATCHES OPEN</div></div>
+    <article class="tournament-group">
+      <div class="group-art full"><div class="art-label"><strong>FULL MAP</strong><small>Battle Royale · Complete Map</small></div></div>
+      <div class="group-body"><div class="group-title"><div><h3>Full Map Tournaments</h3><p>Classic Battle Royale. Complete map. Real skills.</p></div><span class="tag">BATTLE ROYALE</span></div>
+        <div class="mode-grid">
+          <div class="mode-card"><div class="mode-top"><span class="mode-icon">♟</span><div><h4>SOLO</h4><p>1 Player</p></div></div><div class="mode-bottom"><span id="cntf-solo">Matches</span><button class="text-btn" onclick="openMatches('fm','Solo')">View Matches →</button></div></div>
+          <div class="mode-card"><div class="mode-top"><span class="mode-icon">♟♟</span><div><h4>DUO</h4><p>2 Players</p></div></div><div class="mode-bottom"><span id="cntf-duo">Matches</span><button class="text-btn" onclick="openMatches('fm','Duo')">View Matches →</button></div></div>
+          <div class="mode-card"><div class="mode-top"><span class="mode-icon">♟♟♟</span><div><h4>SQUAD</h4><p>4 Players</p></div></div><div class="mode-bottom"><span id="cntf-squad">Matches</span><button class="text-btn" onclick="openMatches('fm','Squad')">View Matches →</button></div></div>
+        </div>
+      </div>
+    </article>
+    <article class="tournament-group">
+      <div class="group-art clash"><div class="art-label"><strong>CLASH SQUAD</strong><small>Custom Rooms · Tactical Fights</small></div></div>
+      <div class="group-body"><div class="group-title"><div><h3>Clash Squad Custom</h3><p>Fast rounds. Tactical plays. Pure action.</p></div><span class="tag">CUSTOM ROOM</span></div>
+        <div class="mode-grid">
+          <div class="mode-card"><div class="mode-top"><span class="mode-icon">♟</span><div><h4>SOLO CUSTOM</h4><p>1 Player</p></div></div><div class="mode-bottom"><span id="cnt-solo">Matches</span><button class="text-btn" onclick="openMatches('cs','Solo Custom')">View Matches →</button></div></div>
+          <div class="mode-card"><div class="mode-top"><span class="mode-icon">♟♟</span><div><h4>DUO CUSTOM</h4><p>2 Players</p></div></div><div class="mode-bottom"><span id="cnt-duo">Matches</span><button class="text-btn" onclick="openMatches('cs','Duo Custom')">View Matches →</button></div></div>
+          <div class="mode-card"><div class="mode-top"><span class="mode-icon">♟♟♟</span><div><h4>SQUAD CUSTOM</h4><p>4 Players</p></div></div><div class="mode-bottom"><span id="cnt-squad">Matches</span><button class="text-btn" onclick="openMatches('cs','Squad Custom')">View Matches →</button></div></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+<section id="freematches" style="padding-top:10px"><div class="wrap"><div class="section-head"><div><div class="kicker">No entry fee</div><h2>FREE FIRE <span>FREE MATCHES</span></h2><p>Full Map free matches — join for free and win Booyah Coins.</p></div><div class="live-chip">● ENTRY FREE</div></div><div class="mtabs" id="freeTabs"></div><div class="mlist two" id="freeList"></div></div></section>
+<div class="features"><div class="wrap feature-row">
+  <div class="feature"><div class="feature-icon">⬡</div><strong>FAIR PLAY</strong><small>Clear tournament rules</small></div>
+  <div class="feature"><div class="feature-icon">ϟ</div><strong>EASY REGISTRATION</strong><small>Simple sign-up flow</small></div>
+  <div class="feature"><div class="feature-icon">♜</div><strong>RESULTS & RANKINGS</strong><small>Updates coming soon</small></div>
+  <div class="feature"><div class="feature-icon">▯</div><strong>MOBILE FRIENDLY</strong><small>Play from anywhere</small></div>
+  <div class="feature"><div class="feature-icon">◉</div><strong>PLAYER SUPPORT</strong><small>Help when you need it</small></div>
+</div></div>
+<section id="prizes"><div class="wrap prize">
+  <div><div class="prize-title">🏆 PRIZE POOL<small>Big rewards. Bigger dreams.</small></div></div>
+  <div class="prize-value"><small>Total Prize Pool</small><strong><span>🪙</span> TBA</strong><em>Booyah Coins · to be announced soon</em></div>
+  <div class="prize-action"><small>PLAY · WIN · BE A LEGEND</small><a class="btn btn-primary" href="#tournaments">View Tournament Modes →</a></div>
+</div></section>
+<section id="rules" style="padding-top:0"><div class="wrap"><div class="section-head"><div><div class="kicker">Play fair</div><h2>TOURNAMENT <span>GUIDELINES</span></h2><p>Rules, entry fees, schedules, and room details will be published with each tournament.</p></div></div><div class="feature-row" style="grid-template-columns:repeat(3,1fr)"><div class="feature"><div class="feature-icon">✓</div><strong>RESPECT THE RULES</strong><small>Follow the match instructions.</small></div><div class="feature"><div class="feature-icon">◇</div><strong>PLAY FAIR</strong><small>Cheating or exploits can lead to disqualification.</small></div><div class="feature"><div class="feature-icon">◷</div><strong>CHECK MATCH DETAILS</strong><small>Confirm timing and room info before joining.</small></div></div></div></section>
+<div class="cta" id="about"><div class="wrap"><h2>READY TO <span>DROP IN?</span></h2><p>Create your player account, log in and join your next match.</p><button class="btn btn-primary" onclick="openAuth('register')">Create Account →</button></div></div>
+</main>
+<footer><div class="wrap"><div class="footer-grid">
+  <div class="footer-brand"><a class="brand" href="#home"><span class="brand-mark">B</span><span>BOOYAH<em>BATTLE</em></span></a><p>Free Fire Tournament Platform<br>Play · Compete · Win</p></div>
+  <div><div class="footer-title">QUICK LINKS</div><div class="footer-links"><a href="#home">Home</a><a href="#tournaments">Tournaments</a><a href="#prizes">Prize Pool</a><a href="#rules">Rules</a></div></div>
+  <div><div class="footer-title">SUPPORT</div><div class="footer-links"><a href="#rules">FAQs & Rules</a><a href="mailto:support@booyahbattle.example" onclick="event.preventDefault();openDrawer()">Contact Support</a><a href="#rules">Fair Play Policy</a></div></div>
+  <div><div class="footer-title">FOLLOW THE BATTLE</div><div class="footer-links"><a href="https://www.instagram.com/booyah_battle.tournaments" target="_blank" rel="noopener">Instagram: @booyah_battle.tournaments</a><a href="mailto:booyahbattletournament01@gmail.com">booyahbattletournament01@gmail.com</a></div></div>
+</div><div class="copyright"><span>© 2026 BOOYAH BATTLE. All rights reserved.</span><span>Built for the battle. ❤️</span></div></div></footer>
+<div class="modal-backdrop" id="modalBackdrop" onclick="if(event.target===this)closeModal()"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-head"><div><div class="kicker" id="modalKicker">BOOYAH BATTLE</div><h3 id="modalTitle"></h3><p id="modalDesc"></p></div><button class="close" onclick="closeModal()" aria-label="Close">✕</button></div>
+<div class="msg" id="authMsg" role="status"></div>
+<form id="registerForm" class="form-grid" autocomplete="on" novalidate>
+  <div class="field"><label for="rName">PLAYER NAME</label><input id="rName" placeholder="Enter your name" maxlength="40" autocomplete="name"></div>
+  <div class="field"><label for="rUid">FREE FIRE UID</label><input id="rUid" placeholder="Enter your in-game UID" inputmode="numeric" maxlength="15"></div>
+  <div class="field"><label for="rContact">EMAIL OR PHONE (used to login)</label><input id="rContact" placeholder="you@example.com or 10-digit phone" maxlength="100" autocomplete="username"></div>
+  <div class="field"><label for="rPass">PASSWORD</label><input id="rPass" type="password" placeholder="At least 6 characters" maxlength="60" autocomplete="new-password"></div>
+  <div class="field"><label for="rPass2">CONFIRM PASSWORD</label><input id="rPass2" type="password" placeholder="Re-enter password" maxlength="60" autocomplete="new-password"></div>
+  <div class="field"><label for="rRef">REFERRAL CODE (optional)</label><input id="rRef" placeholder="e.g. BBXXXXXX" maxlength="12" autocomplete="off" style="text-transform:uppercase"></div>
+  <button class="btn btn-primary" type="submit">Create Account →</button>
+  <p class="auth-switch">Already have an account? <button type="button" class="link-btn" onclick="openAuth('login')">Login</button></p>
+</form>
+<form id="loginForm" class="form-grid" autocomplete="on" novalidate>
+  <div class="field"><label for="lContact">EMAIL OR PHONE</label><input id="lContact" placeholder="The one you registered with" maxlength="100" autocomplete="username"></div>
+  <div class="field"><label for="lPass">PASSWORD</label><input id="lPass" type="password" placeholder="Enter your password" maxlength="60" autocomplete="current-password"></div>
+  <button class="btn btn-primary" type="submit">Login →</button>
+  <p class="auth-switch">New player? <button type="button" class="link-btn" onclick="openAuth('register')">Create an account</button></p>
+</form>
+<div id="joinPanel" style="display:none"><div class="sumbox" id="joinSummary"></div><div class="form-grid"><button class="btn btn-primary" id="joinConfirm" onclick="confirmJoin()">Confirm Registration →</button></div></div>
+<div id="accountPanel" style="display:none"><div class="sumbox" id="acctSummary"></div><div class="kicker" style="margin-top:18px">MY REGISTRATIONS</div><div class="reglist" id="regList"></div><div class="form-grid"><button class="btn btn-primary" onclick="openAuth('wallet')">🪙 Open Wallet / Add Coins</button><button class="btn btn-ghost" onclick="logout()">Logout</button></div></div>
+<div id="myPanel" style="display:none"><div class="sumrow" id="mySum"></div><div id="myList"></div></div>
+<div id="referPanel" style="display:none">
+<div class="walbal"><div><small>YOUR REFERRAL CODE</small><strong id="refCode" style="letter-spacing:2px">—</strong></div><button class="btn btn-primary" onclick="copyRef('code')">Copy</button></div>
+<div class="form-grid" style="margin-top:12px"><button class="btn btn-primary" onclick="shareRef()">Share on WhatsApp</button><button class="btn btn-ghost" onclick="copyRef('link')">🔗 Copy invite link</button></div>
+<div class="statrow" id="refStats"></div>
+<div class="wsec">HOW IT WORKS</div><ol class="rules" id="refRules"></ol><p class="fine" id="refFine"></p>
+<div class="wsec">YOUR REFERRALS</div><div class="txlist" id="refList"></div>
+</div>
+<div id="walletPanel" style="display:none">
+<div class="walbal"><div><small>BOOYAH COINS BALANCE</small><strong id="walBal">🪙 0 BC</strong></div><span class="demo-badge" id="demoBadge">DEMO MODE</span></div>
+<div class="wsec">1 · SELECT COINS</div><div class="chips" id="coinChips"></div>
+<div class="field" style="margin-top:10px"><label for="coinCustom">OR ENTER BOOYAH COINS</label><input id="coinCustom" type="number" inputmode="numeric" min="10" max="10000" step="1" placeholder="Min 10 · Max 10,000"></div>
+<div class="wsec">2 · PAY WITH</div><div class="paygrid" id="payGrid"></div>
+<div class="form-grid"><button class="btn btn-primary" id="payBtn" onclick="payNow()">Add Coins →</button><button class="btn btn-ghost" id="walletBack" style="display:none" onclick="showJoin(joinItem)">← Back to registration</button></div>
+<div class="wsec">WITHDRAW COINS</div><div class="form-grid" style="margin-top:0"><div class="field"><label for="wdAmt">AMOUNT (min 100 BC)</label><input id="wdAmt" type="number" inputmode="numeric" min="100" placeholder="Booyah Coins to withdraw"></div><div class="field"><label for="wdUpi">YOUR UPI ID</label><input id="wdUpi" placeholder="name@upi" maxlength="60"></div><button class="btn btn-ghost" onclick="withdrawNow()">Request Withdrawal →</button></div>
+<div class="wsec">TRANSACTION HISTORY</div><div class="txlist" id="txList"></div>
+</div>
+<p class="form-note" style="margin:14px 0 0">Demo: accounts and registrations are saved only in this browser on this device — no server yet.</p>
+</div></div>
+<div class="modal-backdrop" id="matchBackdrop" onclick="if(event.target===this)closeMatches()"><div class="modal wide" role="dialog" aria-modal="true" aria-labelledby="matchTitle"><div class="modal-head"><div><div class="kicker" id="matchKicker">CLASH SQUAD CUSTOM</div><h3 id="matchTitle">Upcoming Matches</h3><p id="matchDesc">Pick a match and join with your squad.</p></div><button class="close" onclick="closeMatches()" aria-label="Close">✕</button></div>
+<div class="mtabs" id="matchTabs"></div><div class="mlist" id="matchList"></div><p class="m-note">Times are in IST. Room ID &amp; password are shared with registered players shortly before the match.</p></div></div>
+<button class="fab" id="fab" onclick="openAuth('mymatches')" aria-label="My Matches">🎮<span class="fab-badge" id="fabBadge">0</span><span class="fab-label">My Matches</span></button>
+<div class="drawer-backdrop" id="drawerBackdrop" onclick="closeDrawer()"><aside class="drawer" onclick="event.stopPropagation()" role="dialog" aria-label="Menu">
+<div class="drawer-head"><strong>MENU</strong><button class="close" onclick="closeDrawer()" aria-label="Close menu">✕</button></div>
+<a class="d-item m-only" href="#home" onclick="closeDrawer()"><i>🏠</i>Home</a><a class="d-item m-only" href="#tournaments" onclick="closeDrawer()"><i>🎯</i>Tournaments</a><a class="d-item m-only" href="#freematches" onclick="closeDrawer()"><i>🆓</i>Free Matches</a><a class="d-item m-only" href="#prizes" onclick="closeDrawer()"><i>🏆</i>Prize Pool</a><a class="d-item m-only" href="#rules" onclick="closeDrawer()"><i>📜</i>Rules</a>
+<button class="d-item" onclick="openAuth('mymatches')"><i>🎮</i><span>My Matches<small>Matches you have joined</small></span><span class="go">›</span></button>
+<button class="d-item" onclick="openAuth('refer')"><i>🎁</i><span>Refer &amp; Earn<small>Invite friends, earn Booyah Coins</small></span><span class="go">›</span></button>
+<button class="d-item" onclick="openAuth('wallet')"><i>🪙</i><span>Wallet<small>Booyah Coins balance</small></span><span class="go">›</span></button>
+<div class="d-title">CUSTOMER SUPPORT</div>
+<button class="d-item" onclick="openSupport('whatsapp')"><i style="background:#1f8f4e">💬</i><span>WhatsApp<small>Chat with support</small></span><span class="go">›</span></button>
+<button class="d-item" onclick="openSupport('telegram')"><i style="background:#2a8fd0">✈</i><span>Telegram<small>Join / message us</small></span><span class="go">›</span></button>
+<button class="d-item" onclick="openSupport('instagram')"><i style="background:#c13584">📷</i><span>Instagram<small>@booyah_battle.tournaments</small></span><span class="go">›</span></button>
+<button class="d-item" onclick="openSupport('email')"><i style="background:#566175">✉</i><span>Email<small>booyahbattletournament01@gmail.com</small></span><span class="go">›</span></button>
+<div id="drawerAuth" style="margin-top:20px"></div>
+</aside></div>
+<div class="toast" id="toast" role="status"></div>
+<script>
+const K={users:'bbUsers',sess:'bbSession',joins:'bbJoins'};
+function lsGet(k,d){try{const v=JSON.parse(localStorage.getItem(k));return v==null?d:v}catch(e){return d}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}}
+function lsDel(k){try{localStorage.removeItem(k)}catch(e){}}
+async function hashPw(pw){try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode('bb::'+pw));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){return 'x'+btoa(unescape(encodeURIComponent('bb::'+pw)))}}
+const normContact=v=>{v=v.trim().toLowerCase();return v.includes('@')?v:v.replace(/[\s\-()+]/g,'').replace(/^91(?=\d{10}$)/,'')};
+const validContact=v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)||/^\d{10}$/.test(v);
+function currentUser(){const c=lsGet(K.sess,null);const u=c?lsGet(K.users,[]).find(u=>u.contact===c):null;return u&&!u.blocked?u:null}
+function myJoins(){const u=currentUser();return u?lsGet(K.joins,[]).filter(j=>j.contact===u.contact):[]}
+function hasJoined(id){return myJoins().some(j=>j.id===id)}
+function filledOf(m){return m.filled+lsGet(K.joins,[]).filter(j=>j.id===m.id).length}
+function esc(t){return String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+let toastTimer,pendingJoin=null,joinItem=null,pendingView=null;
+function showToast(msg){let t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2800)}
+function setMsg(type,text){const m=document.getElementById('authMsg');if(!text){m.className='msg';m.textContent='';return}m.className='msg show '+type;m.textContent=text}
+
+function updateNav(){const u=currentUser();document.getElementById('navOut').style.display=u?'none':'flex';document.getElementById('navIn').style.display=u?'flex':'none';if(u){document.getElementById('navName').textContent='👤 '+u.name;document.getElementById('navCoins').textContent=bc(balance())}const n=u?myJoins().length:0,fb=document.getElementById('fabBadge');fb.textContent=n;fb.style.display=n?'grid':'none';const da=document.getElementById('drawerAuth');if(da)da.innerHTML=u?'<button class="btn btn-ghost" style="width:100%" onclick="logout()">Logout ('+esc(u.name)+')</button>':'<div style="display:grid;gap:10px"><button class="btn btn-primary" onclick="openAuth(\'login\')">Login</button><button class="btn btn-ghost" onclick="openAuth(\'register\')">Create Account</button></div>'}
+
+
+/* ================= BOOYAH COINS WALLET ================= */
+const COIN_RATE=1;            /* ₹ charged per 1 Booyah Coin — change when you set pricing */
+const GATEWAY_CONNECTED=false;/* set true after connecting your payment gateway */
+const PAY_METHODS=[{id:'paytm',name:'Paytm',c:'#00b9f1',t:'P'},{id:'gpay',name:'Google Pay',c:'#4285f4',t:'G'},{id:'phonepe',name:'PhonePe',c:'#5f259f',t:'Pe'},{id:'upi',name:'Other UPI',c:'#2e7d5b',t:'U'},{id:'card',name:'Card / Net Banking',c:'#566175',t:'▭'}];
+const COIN_PRESETS=[50,100,200,500,1000];
+const bc=n=>'🪙 '+Number(n).toLocaleString('en-IN')+' BC';
+function walletOf(c){return (lsGet('bbWallets',{})[c])||{balance:0,tx:[]}}
+function saveWallet(c,w){const all=lsGet('bbWallets',{});all[c]=w;return lsSet('bbWallets',all)}
+function balance(){const u=currentUser();return u?walletOf(u.contact).balance:0}
+function walletTxFor(c,type,amount,note,ref){const w=walletOf(c);w.balance+=type==='credit'?amount:-amount;w.tx.unshift({type,amount,note,ref:ref||null,at:new Date().toISOString()});w.tx=w.tx.slice(0,100);return saveWallet(c,w)}
+function walletTx(type,amount,note,ref){const u=currentUser();if(!u)return false;const ok=walletTxFor(u.contact,type,amount,note,ref);updateNav();return ok}
+/* >>> PAYMENT GATEWAY HOOK — replace the body of this function later.
+   Input : {method:'paytm'|'gpay'|'phonepe'|'upi'|'card', coins, amountINR, user}
+   Output: Promise resolving {ok:true, ref:'<gateway txn id>'} or {ok:false, error:'...'} */
+async function startPayment(order){
+  if(!GATEWAY_CONNECTED){await new Promise(r=>setTimeout(r,700));return {ok:true,ref:'DEMO-'+Date.now().toString(36).toUpperCase()}}
+  return {ok:false,error:'Gateway not implemented'};
+}
+let walletCoins=100,walletMethod=null;
+function renderWallet(){
+  const u=currentUser();if(!u)return;
+  document.getElementById('modalTitle').textContent='My Wallet';
+  document.getElementById('walBal').textContent=bc(balance());
+  document.getElementById('demoBadge').style.display=GATEWAY_CONNECTED?'none':'inline-block';
+  document.getElementById('coinChips').innerHTML=COIN_PRESETS.map(n=>`<button type="button" class="chip ${walletCoins===n?'sel':''}" onclick="pickCoins(${n})">🪙 ${n.toLocaleString('en-IN')}</button>`).join('');
+  const cu=document.getElementById('coinCustom');if(!COIN_PRESETS.includes(walletCoins))cu.value=walletCoins;else cu.value='';
+  document.getElementById('payGrid').innerHTML=PAY_METHODS.map(m=>`<button type="button" class="pay ${walletMethod===m.id?'sel':''}" onclick="pickMethod('${m.id}')"><i style="background:${m.c}">${m.t}</i>${m.name}</button>`).join('');
+  document.getElementById('payBtn').textContent=walletCoins>0?'Add '+bc(walletCoins)+' →':'Add Coins →';
+  document.getElementById('walletBack').style.display=joinItem?'inline-flex':'none';
+  const tx=walletOf(u.contact).tx;
+  document.getElementById('txList').innerHTML=tx.length?tx.map(t=>`<div class="tx"><div>${esc(t.note)}<small>${new Date(t.at).toLocaleString('en-IN',{timeZone:'Asia/Kolkata',day:'numeric',month:'short',hour:'numeric',minute:'2-digit'})}${t.ref?' · '+esc(t.ref):''}</small></div><b class="${t.type==='credit'?'plus':'minus'}">${t.type==='credit'?'+':'−'}${t.amount.toLocaleString('en-IN')} BC</b></div>`).join(''):'<div class="tx" style="color:var(--muted)">No transactions yet.</div>';
+}
+function pickCoins(n){walletCoins=n;setMsg();renderWallet()}
+function pickMethod(m){walletMethod=m;setMsg();renderWallet()}
+document.getElementById('coinCustom').addEventListener('input',e=>{const v=parseInt(e.target.value,10);walletCoins=isNaN(v)?0:v;document.getElementById('payBtn').textContent=walletCoins>0?'Add '+bc(walletCoins)+' →':'Add Coins →';document.querySelectorAll('#coinChips .chip').forEach(c=>c.classList.remove('sel'))});
+let paying=false;
+async function payNow(){
+  const u=currentUser();if(!u||paying)return;
+  if(!Number.isInteger(walletCoins)||walletCoins<10||walletCoins>10000)return setMsg('err','Enter between 10 and 10,000 Booyah Coins.');
+  if(!walletMethod)return setMsg('err','Select a payment method.');
+  const m=PAY_METHODS.find(x=>x.id===walletMethod),b=document.getElementById('payBtn');
+  paying=true;b.disabled=true;b.textContent='Processing…';setMsg('info','Contacting '+m.name+'…');
+  let r;try{r=await startPayment({method:m.id,coins:walletCoins,amountINR:walletCoins*COIN_RATE,user:{name:u.name,contact:u.contact,uid:u.uid}})}catch(e){r={ok:false,error:'Payment failed'}}
+  paying=false;b.disabled=false;
+  if(!r.ok){renderWallet();return setMsg('err',r.error||'Payment failed. No coins were added.')}
+  if(!walletTx('credit',walletCoins,'Added via '+m.name,r.ref)){renderWallet();return setMsg('err','Could not save in this browser.')}
+  const added=walletCoins;renderWallet();setMsg('ok','✓ '+bc(added)+' added to your wallet.'+(GATEWAY_CONNECTED?'':' (Demo mode — no real payment was made.)'));
+}
+const WD_MIN=100;
+function withdrawNow(){const u=currentUser();if(!u)return;
+  const amt=parseInt(document.getElementById('wdAmt').value,10),upi=document.getElementById('wdUpi').value.trim();
+  if(!Number.isInteger(amt)||amt<WD_MIN)return setMsg('err','Minimum withdrawal is '+bc(WD_MIN)+'.');
+  if(amt>balance())return setMsg('err','Not enough Booyah Coins in your wallet.');
+  if(!/^[\w.\-]{2,}@[\w.\-]{2,}$/.test(upi))return setMsg('err','Enter a valid UPI ID (like name@upi).');
+  const l=lsGet('bbWithdrawals',[]);l.unshift({id:'WD'+Date.now().toString(36).toUpperCase(),contact:u.contact,name:u.name,uid:u.uid,upi,amount:amt,status:'pending',at:new Date().toISOString()});
+  if(!lsSet('bbWithdrawals',l))return setMsg('err','Could not save in this browser.');
+  walletTx('debit',amt,'Withdrawal request (UPI: '+upi+')');renderWallet();setMsg('ok','✓ Request sent. '+bc(amt)+' is held until admin pays you ₹'+(amt*COIN_RATE)+' on UPI. If rejected, coins are refunded.');}
+/* ---- modal views ---- */
+const PROTECTED=['account','wallet','mymatches','refer'];
+const pendingRef=(new URLSearchParams(location.search).get('ref')||'').toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,12);
+const modalOpen=()=>document.getElementById('modalBackdrop').classList.contains('open');
+function showView(v){
+  const show=(id,on,d)=>{document.getElementById(id).style.display=on?d:'none'};
+  show('registerForm',v==='register','grid');show('loginForm',v==='login','grid');show('joinPanel',v==='join','block');show('accountPanel',v==='account','block');show('walletPanel',v==='wallet','block');show('myPanel',v==='mymatches','block');show('referPanel',v==='refer','block');
+  const T={register:['CREATE ACCOUNT','Create your player account','Step 1 — sign up. You will log in right after.'],login:['PLAYER LOGIN','Login to your account','Login to join matches and track your registrations.'],join:['CONFIRM REGISTRATION','Join tournament','Check the details and confirm.'],account:['MY ACCOUNT','Player dashboard','Your profile and match registrations.'],wallet:['WALLET','My Wallet','Add Booyah Coins and use them to join matches.'],mymatches:['MY MATCHES','My Matches','All the matches you have joined.'],refer:['REFER & EARN','Refer & Earn','Invite friends and earn Booyah Coins.']}[v];
+  document.getElementById('modalKicker').textContent=T[0];document.getElementById('modalTitle').textContent=T[1];document.getElementById('modalDesc').textContent=T[2];
+}
+function openAuth(view,opts){
+  opts=opts||{};closeMatches();closeDrawer();
+  if(view==='wallet'&&!opts.fromJoin&&!(joinItem&&modalOpen()))joinItem=null;
+  if((view==='login'||view==='register')&&currentUser())view='account';
+  if(PROTECTED.includes(view)&&!currentUser()){pendingView=view;view='login';opts.type=opts.type||'info';opts.msg=opts.msg||'Please login to continue.'}
+  document.getElementById('registerForm').reset();document.getElementById('loginForm').reset();setMsg();
+  showView(view);
+  if(view==='register'&&pendingRef)document.getElementById('rRef').value=pendingRef;
+  if(view==='login'&&opts.contact)document.getElementById('lContact').value=opts.contact;
+  if(opts.msg)setMsg(opts.type||'info',opts.msg);
+  if(view==='account')renderAccount();if(view==='wallet')renderWallet();if(view==='mymatches')renderMy();if(view==='refer')renderRefer();
+  document.getElementById('modalBackdrop').classList.add('open');
+  const f=document.querySelector('#modalBackdrop form[style*="grid"] input');if(f&&(view==='login'||view==='register'))setTimeout(()=>f.focus(),50);
+}
+function closeModal(){document.getElementById('modalBackdrop').classList.remove('open');pendingJoin=null;joinItem=null;pendingView=null}
+function renderAccount(){
+  const u=currentUser();if(!u)return;
+  document.getElementById('modalTitle').textContent='Hi, '+u.name;
+  document.getElementById('acctSummary').innerHTML=`<div><span>Player</span><b>${esc(u.name)}</b></div><div><span>Free Fire UID</span><b>${esc(u.uid)}</b></div><div><span>Contact</span><b>${esc(u.contact)}</b></div><div><span>Wallet</span><b class="coin">${bc(balance())}</b></div>`;
+  const js=myJoins();
+  document.getElementById('regList').innerHTML=js.length?js.map(j=>`<div class="regitem"><b>${esc(j.title)}</b><small>${esc(j.category)} · ${esc(j.mode)}${j.time?' · '+fmtTime(j.time):''}</small></div>`).join(''):'<div class="regitem" style="color:var(--muted)">No registrations yet. Join a match from the Tournaments section.</div>';
+}
+function logout(){lsDel(K.sess);updateNav();closeModal();closeDrawer();showToast('Logged out.')}
+function openDrawer(){updateNav();document.getElementById('drawerBackdrop').classList.add('open')}
+function closeDrawer(){document.getElementById('drawerBackdrop').classList.remove('open')}
+
+/* ---- customer support — put your real links here ---- */
+const SUPPORT={whatsapp:'',telegram:'',instagram:'https://www.instagram.com/booyah_battle.tournaments',email:'booyahbattletournament01@gmail.com'};
+/* examples: whatsapp:'https://wa.me/91XXXXXXXXXX', telegram:'https://t.me/yourchannel', instagram:'https://instagram.com/yourpage', email:'support@yourdomain.com' */
+const SUPPORT_NAME={whatsapp:'WhatsApp',telegram:'Telegram',instagram:'Instagram',email:'Email'};
+function openSupport(k){const v=(SUPPORT[k]||'').trim();closeDrawer();if(!v)return showToast(SUPPORT_NAME[k]+' support details coming soon.');if(k==='email')location.href='mailto:'+v;else window.open(v,'_blank','noopener')}
+
+/* ---- register ---- */
+function genCode(users){const c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let s;do{s='BB';for(let i=0;i<6;i++)s+=c[Math.floor(Math.random()*c.length)]}while(users.some(u=>u.refCode===s));return s}
+document.getElementById('registerForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const name=rName.value.trim(),uid=rUid.value.trim(),contact=normContact(rContact.value),pw=rPass.value,pw2=rPass2.value,refIn=(rRef.value||'').trim().toUpperCase();
+  if(name.length<2)return setMsg('err','Please enter your player name.');
+  if(!/^\d{6,15}$/.test(uid))return setMsg('err','Free Fire UID must be 6–15 digits (numbers only).');
+  if(!validContact(contact))return setMsg('err','Enter a valid email address or a 10-digit phone number.');
+  if(pw.length<6)return setMsg('err','Password must be at least 6 characters.');
+  if(pw!==pw2)return setMsg('err','Passwords do not match.');
+  const users=lsGet(K.users,[]);
+  if(users.some(u=>u.contact===contact)){return openAuth('login',{contact,type:'info',msg:'This email/phone is already registered. Please login.'})}
+  if(refIn&&!users.some(u=>u.refCode===refIn))return setMsg('err','Invalid referral code. Check it, or leave the field empty.');
+  users.push({name,uid,contact,hash:await hashPw(pw),refCode:genCode(users),referredBy:refIn||null,refRewarded:false,createdAt:new Date().toISOString()});
+  if(!lsSet(K.users,users))return setMsg('err','Could not save in this browser. Please allow site storage and try again.');
+  /* after registering -> go to LOGIN page */
+  openAuth('login',{contact,type:'ok',msg:'✓ Account created! Now login with your password to continue.'});
+});
+/* ---- login ---- */
+document.getElementById('loginForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const contact=normContact(lContact.value),pw=lPass.value;
+  if(!contact||!pw)return setMsg('err','Enter your email/phone and password.');
+  const u=lsGet(K.users,[]).find(x=>x.contact===contact);
+  if(!u)return setMsg('err','No account found. Please create an account first.');
+  if(u.blocked)return setMsg('err','Your account has been blocked by admin. Please contact support.');
+  if(u.hash!==await hashPw(pw))return setMsg('err','Wrong password. Try again.');
+  lsSet(K.sess,u.contact);updateNav();
+  if(pendingJoin){const it=pendingJoin;pendingJoin=null;showJoin(it)}
+  else if(pendingView){const v=pendingView;pendingView=null;openAuth(v)}
+  else{closeModal();showToast('Welcome back, '+u.name+'!')}
+});
+
+/* ---- join flow (needs login) ---- */
+function requestJoin(item){
+  if(!currentUser()){pendingJoin=item;openAuth('login',{type:'info',msg:'Login required to join “'+item.title+'”. New here? Create an account first.'});pendingJoin=item;return}
+  showJoin(item);
+}
+function showJoin(item){
+  const u=currentUser();joinItem=item;setMsg();showView('join');closeDrawer();
+  document.getElementById('modalKicker').textContent=item.category.toUpperCase();
+  document.getElementById('modalTitle').textContent=item.title;
+  const rows=[['Mode',item.mode]];
+  if(item.time)rows.push(['Starts',fmtTime(item.time)+' IST']);
+  if(item.map)rows.push(['Map',item.map+(item.rounds?' · '+item.rounds:'')]);
+  if(item.fee!=null)rows.push(['Entry fee',item.fee?bc(item.fee):'FREE']);
+  if(item.prize)rows.push(['Prize pool',bc(item.prize)]);
+  rows.push(['Player',u.name],['Free Fire UID',u.uid]);if(item.fee)rows.push(['Your balance',bc(balance())]);
+  document.getElementById('joinSummary').innerHTML=rows.map(r=>`<div><span>${r[0]}</span><b>${esc(r[1])}</b></div>`).join('');
+  const done=hasJoined(item.id),b=document.getElementById('joinConfirm'),short=item.fee&&balance()<item.fee;
+  b.disabled=done;b.textContent=done?'✓ Already registered':short?'Add Coins to Join →':item.fee?'Pay '+bc(item.fee)+' & Join →':'Join for FREE →';
+  if(done)setMsg('ok','You are already registered for this.');else if(short)setMsg('err','Not enough Booyah Coins. You need '+bc(item.fee-balance())+' more.');
+  document.getElementById('modalBackdrop').classList.add('open');
+}
+function confirmJoin(){
+  const u=currentUser(),it=joinItem;if(!u||!it)return;
+  if(hasJoined(it.id))return;
+  if(it.fee&&balance()<it.fee){walletCoins=Math.max(10,Math.ceil((it.fee-balance())/10)*10);return openAuth('wallet',{fromJoin:true,type:'info',msg:'Add coins to join “'+it.title+'”.'})}
+  if(it.time&&phaseOf(it.time)!=='up')return setMsg('err','Sorry, this match has already started.');
+  if(it.slots&&filledOf(it)>=it.slots)return setMsg('err','Sorry, this match just got full.');
+  const joins=lsGet(K.joins,[]);
+  joins.push({contact:u.contact,id:it.id,title:it.title,category:it.category,mode:it.mode,time:it.time||null,map:it.map||null,rounds:it.rounds||null,fee:it.fee||0,prize:it.prize||0,at:new Date().toISOString()});
+  if(!lsSet(K.joins,joins))return setMsg('err','Could not save in this browser.');
+  if(it.fee)walletTx('debit',it.fee,'Entry: '+it.title);
+  rewardReferrer(u,it);
+  setMsg('ok','✓ Registered! Room ID & password will be shared before the match. '+(it.fee?bc(it.fee)+' deducted. ':'')+'(Demo: saved in this browser only.)');
+  const b=document.getElementById('joinConfirm');b.disabled=true;b.textContent='✓ Registered';
+  updateNav();refreshMatchViews();
+}
+
+/* ================= REFER & EARN ================= */
+const REFERRAL_BONUS=((lsGet('bbAdmin',{}).settings||{}).referralBonus)??20; /* Booyah Coins the referrer gets when the friend plays their first (paid) match */
+const maskName=n=>n.trim().split(/\s+/)[0].slice(0,3)+'***';
+function myRefCode(){const u=currentUser();if(!u)return'';if(u.refCode)return u.refCode;const users=lsGet(K.users,[]),x=users.find(y=>y.contact===u.contact);x.refCode=genCode(users);lsSet(K.users,users);return x.refCode}
+function refLink(){return location.href.split(/[?#]/)[0]+'?ref='+myRefCode()}
+function rewardReferrer(u,it){
+  if(!it.fee||!u.referredBy||u.refRewarded)return;
+  if(!walletOf(u.contact).tx.some(t=>t.note.indexOf('Added via')===0))return; /* friend must have added coins */
+  const users=lsGet(K.users,[]),me=users.find(x=>x.contact===u.contact),ref=users.find(x=>x.refCode===u.referredBy);
+  if(!me||!ref||ref.contact===me.contact)return;
+  me.refRewarded=true;lsSet(K.users,users);
+  walletTxFor(ref.contact,'credit',REFERRAL_BONUS,'Referral bonus — '+maskName(me.name)+' played first match');
+}
+function renderRefer(){
+  const u=currentUser();if(!u)return;const code=myRefCode();
+  document.getElementById('refCode').textContent=code;
+  const users=lsGet(K.users,[]),mine=users.filter(x=>x.referredBy===code);
+  const rewarded=mine.filter(x=>x.refRewarded).length;
+  document.getElementById('refStats').innerHTML=`<div class="stat"><strong>${mine.length}</strong><small>FRIENDS JOINED</small></div><div class="stat"><strong>${rewarded}</strong><small>FIRST MATCH PLAYED</small></div><div class="stat"><strong class="coin">${rewarded*REFERRAL_BONUS}</strong><small>BC EARNED</small></div>`;
+  document.getElementById('refRules').innerHTML=`<li>Share your referral code or invite link with a friend.</li><li>Your friend creates an account and enters your code while registering.</li><li>Your friend adds Booyah Coins to their wallet.</li><li>When your friend plays their <b>first match</b>, you instantly get <b class="coin">${bc(REFERRAL_BONUS)}</b> in your wallet.</li>`;
+  document.getElementById('refFine').textContent='Reward is given once per friend, only after their first paid match entry. Self-referrals and duplicate or fake accounts are not eligible and rewards can be reversed.';
+  document.getElementById('refList').innerHTML=mine.length?mine.map(x=>{const added=walletOf(x.contact).tx.some(t=>t.note.indexOf('Added via')===0);return `<div class="tx"><div>${esc(maskName(x.name))}<small>${x.refRewarded?'First match played — reward credited':added?'Added coins — waiting for first match':'Registered — waiting to add coins'}</small></div><b class="${x.refRewarded?'plus':''}">${x.refRewarded?'+'+REFERRAL_BONUS+' BC':'Pending'}</b></div>`}).join(''):'<div class="tx" style="color:var(--muted)">No referrals yet. Share your code to get started!</div>';
+}
+function copyRef(what){const t=what==='link'?refLink():myRefCode();const done=()=>showToast(what==='link'?'Invite link copied!':'Referral code copied!');try{navigator.clipboard.writeText(t).then(done,()=>{prompt('Copy this:',t)})}catch(e){prompt('Copy this:',t)}}
+function shareRef(){const msg='Join me on BOOYAH BATTLE — Free Fire tournaments! Use my referral code '+myRefCode()+' when you sign up: '+refLink();window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank','noopener')}
+
+/* ================= MY MATCHES ================= */
+const MATCH_MINUTES=60; /* a match counts as ONGOING for this long after its start time */
+function phaseOf(t){if(!t)return'up';const n=Date.now(),st=new Date(t).getTime();return n<st?'up':n<st+MATCH_MINUTES*60000?'live':'done'}
+function matchStatus(t){const ph=phaseOf(t);return ph==='up'?['open','UPCOMING']:ph==='live'?['live','ONGOING']:['full','COMPLETED']}
+function countdown(t){const d=new Date(t)-Date.now();if(d<=0)return'';const m=Math.floor(d/60000),dd=Math.floor(m/1440),h=Math.floor(m%1440/60);return 'Starts in '+(dd?dd+'d ':'')+h+'h '+(m%60)+'m'}
+function myCard(j){
+  const ph=phaseOf(j.time),st=matchStatus(j.time),cd=ph==='up'&&j.time?countdown(j.time):'';
+  const rm=(lsGet('bbAdmin',{}).rooms||{})[j.id];const note=rm&&rm.room&&ph!=='done'?'🔑 Room ID: <b>'+esc(rm.room)+'</b> · Password: <b>'+esc(rm.pass||'-')+'</b>':ph==='live'?'🔴 Match is live now — join the custom room with the Room ID &amp; Password shared by the admin.':ph==='done'?'Match finished. Results will be announced soon.':'Room ID &amp; Password: will be shared here before the match starts.';
+  return `<div class="mm ${ph==='live'?'live':ph==='done'?'done':''}"><div class="mm-top"><b>${esc(j.title)}</b><span class="badge ${st[0]}">${st[1]}</span></div><small>${esc(j.category)} · ${esc(j.mode)}</small><div class="match-meta">${j.time?'<span>🕘 <b>'+fmtTime(j.time)+'</b></span>':''}${j.map?'<span>🗺 <b>'+esc(j.map)+'</b></span>':''}<span>🎟 <b>${j.fee?bc(j.fee):'FREE'}</b></span>${j.prize?'<span>🏆 <b>'+bc(j.prize)+'</b></span>':''}</div>${cd?'<div class="cd">⏳ '+cd+'</div>':''}<div class="room">${note}</div></div>`;
+}
+function renderMy(){
+  const js=myJoins(),t=j=>j.time?+new Date(j.time):9e15;
+  const G={live:js.filter(j=>phaseOf(j.time)==='live').sort((a,b)=>t(a)-t(b)),up:js.filter(j=>phaseOf(j.time)==='up').sort((a,b)=>t(a)-t(b)),done:js.filter(j=>phaseOf(j.time)==='done').sort((a,b)=>t(b)-t(a))};
+  document.getElementById('mySum').innerHTML=`<div class="stat"><strong style="color:#ff6b84">${G.live.length}</strong><small>ONGOING</small></div><div class="stat"><strong style="color:#7ee2ae">${G.up.length}</strong><small>UPCOMING</small></div><div class="stat"><strong>${G.done.length}</strong><small>COMPLETED</small></div>`;
+  const sec=(k,label,dot,empty)=>`<div class="msec"><div class="msec-h"><strong><i class="dot ${dot}"></i>${label}</strong><span>${G[k].length}</span></div><div class="mlist">${G[k].length?G[k].map(myCard).join(''):'<div class="mempty">'+empty+'</div>'}</div></div>`;
+  document.getElementById('myList').innerHTML=
+    sec('live','ONGOING MATCHES','live','No match is running right now.')+
+    sec('up','UPCOMING MATCHES','up',js.length?'No upcoming matches. Join one from Tournaments or Free Matches!':'You have not joined any match yet. Pick one from Tournaments or Free Matches!')+
+    sec('done','COMPLETED MATCHES','done','No completed matches yet.');
+}
+setInterval(()=>{if(document.getElementById('myPanel').style.display==='block'&&modalOpen())renderMy();if(document.getElementById('matchBackdrop').classList.contains('open'))renderMatches();renderFree()},30000);
+
+/* ===== MATCHES — edit these lists to add / change matches ===== */
+const CS_MODES={'Solo Custom':{fmt:'1v1',team:'players',per:1},'Duo Custom':{fmt:'2v2',team:'teams',per:2},'Squad Custom':{fmt:'4v4',team:'teams',per:4}};
+const BR_MODES={'Solo':{fmt:'Solo BR',team:'players',per:1},'Duo':{fmt:'Duo BR',team:'teams',per:2},'Squad':{fmt:'Squad BR',team:'teams',per:4}};
+const GROUPS={
+ cs:{label:'CLASH SQUAD CUSTOM',cat:'Clash Squad Custom',modes:CS_MODES,matches:{
+  'Solo Custom':[
+   {id:'CS-S1',title:'Solo Showdown #1',time:'2026-10-31T18:00:00+05:30',map:'Bermuda',rounds:'Best of 7',fee:20,prize:200,slots:16,filled:11},
+   {id:'CS-S2',title:'Solo Showdown #2',time:'2026-11-01T19:00:00+05:30',map:'Purgatory',rounds:'Best of 7',fee:20,prize:200,slots:16,filled:5},
+   {id:'CS-S3',title:'Solo Pro Cup',time:'2026-11-02T20:00:00+05:30',map:'Kalahari',rounds:'Best of 7',fee:50,prize:600,slots:16,filled:16},
+   {id:'CS-S4',title:'Solo Weekend Rush',time:'2026-11-07T17:00:00+05:30',map:'Bermuda',rounds:'Best of 7',fee:30,prize:350,slots:16,filled:2}],
+  'Duo Custom':[
+   {id:'CS-D1',title:'Duo Clash #1',time:'2026-10-31T19:30:00+05:30',map:'Bermuda',rounds:'Best of 7',fee:40,prize:400,slots:8,filled:6},
+   {id:'CS-D2',title:'Duo Clash #2',time:'2026-11-01T20:30:00+05:30',map:'Purgatory',rounds:'Best of 7',fee:40,prize:400,slots:8,filled:3},
+   {id:'CS-D3',title:'Duo Elite Cup',time:'2026-11-03T21:00:00+05:30',map:'Kalahari',rounds:'Best of 7',fee:80,prize:1000,slots:8,filled:8},
+   {id:'CS-D4',title:'Duo Weekend Rush',time:'2026-11-08T18:00:00+05:30',map:'Bermuda',rounds:'Best of 7',fee:50,prize:550,slots:8,filled:1}],
+  'Squad Custom':[
+   {id:'CS-Q1',title:'Squad War #1',time:'2026-10-31T21:00:00+05:30',map:'Bermuda',rounds:'Best of 13',fee:100,prize:1000,slots:8,filled:7},
+   {id:'CS-Q2',title:'Squad War #2',time:'2026-11-02T21:00:00+05:30',map:'Purgatory',rounds:'Best of 13',fee:100,prize:1000,slots:8,filled:4},
+   {id:'CS-Q3',title:'Squad Champions Cup',time:'2026-11-05T20:00:00+05:30',map:'Kalahari',rounds:'Best of 13',fee:200,prize:2500,slots:8,filled:8},
+   {id:'CS-Q4',title:'Squad Weekend Finale',time:'2026-11-08T20:00:00+05:30',map:'Bermuda',rounds:'Best of 13',fee:150,prize:1800,slots:8,filled:2}]
+ }},
+ fm:{label:'FULL MAP',cat:'Full Map',modes:BR_MODES,matches:{
+  'Solo':[
+   {id:'FM-S1',title:'Solo Survival #1',time:'2026-10-31T17:00:00+05:30',map:'Bermuda',rounds:'Per kill 🪙 2',fee:30,prize:1000,slots:48,filled:34},
+   {id:'FM-S2',title:'Solo Survival #2',time:'2026-11-01T18:00:00+05:30',map:'Purgatory',rounds:'Per kill 🪙 2',fee:30,prize:1000,slots:48,filled:12},
+   {id:'FM-S3',title:'Solo Grand Cup',time:'2026-11-04T20:00:00+05:30',map:'Kalahari',rounds:'Per kill 🪙 5',fee:100,prize:4000,slots:48,filled:48},
+   {id:'FM-S4',title:'Solo Weekend Brawl',time:'2026-11-08T16:00:00+05:30',map:'Alpine',rounds:'Per kill 🪙 3',fee:50,prize:1800,slots:48,filled:6}],
+  'Duo':[
+   {id:'FM-D1',title:'Duo Drop #1',time:'2026-10-31T18:30:00+05:30',map:'Bermuda',rounds:'Per kill 🪙 3',fee:60,prize:1000,slots:24,filled:19},
+   {id:'FM-D2',title:'Duo Drop #2',time:'2026-11-02T19:30:00+05:30',map:'Purgatory',rounds:'Per kill 🪙 3',fee:60,prize:1000,slots:24,filled:7},
+   {id:'FM-D3',title:'Duo Grand Cup',time:'2026-11-05T21:00:00+05:30',map:'Nexterra',rounds:'Per kill 🪙 6',fee:150,prize:3500,slots:24,filled:24},
+   {id:'FM-D4',title:'Duo Weekend Brawl',time:'2026-11-08T17:00:00+05:30',map:'Kalahari',rounds:'Per kill 🪙 4',fee:80,prize:1500,slots:24,filled:3}],
+  'Squad':[
+   {id:'FM-Q1',title:'Squad Domination #1',time:'2026-10-31T20:00:00+05:30',map:'Bermuda',rounds:'Per kill 🪙 4',fee:120,prize:1200,slots:12,filled:10},
+   {id:'FM-Q2',title:'Squad Domination #2',time:'2026-11-03T20:00:00+05:30',map:'Purgatory',rounds:'Per kill 🪙 4',fee:120,prize:1200,slots:12,filled:5},
+   {id:'FM-Q3',title:'Squad Grand Cup',time:'2026-11-06T21:00:00+05:30',map:'Alpine',rounds:'Per kill 🪙 8',fee:300,prize:5000,slots:12,filled:12},
+   {id:'FM-Q4',title:'Squad Weekend Brawl',time:'2026-11-09T18:00:00+05:30',map:'Kalahari',rounds:'Per kill 🪙 5',fee:200,prize:2400,slots:12,filled:2}]
+ }},
+ fr:{label:'FREE MATCHES · FULL MAP',cat:'Full Map · Free',modes:BR_MODES,matches:{
+  'Solo':[
+   {id:'FR-S1',title:'Free Solo #1',time:'2026-10-30T18:00:00+05:30',map:'Bermuda',rounds:'Per kill 🪙 1',fee:0,prize:100,slots:48,filled:21},
+   {id:'FR-S2',title:'Free Solo #2',time:'2026-11-01T17:00:00+05:30',map:'Purgatory',rounds:'Per kill 🪙 1',fee:0,prize:100,slots:48,filled:9},
+   {id:'FR-S3',title:'Free Solo Sunday',time:'2026-11-08T15:00:00+05:30',map:'Kalahari',rounds:'Per kill 🪙 1',fee:0,prize:150,slots:48,filled:3}],
+  'Duo':[
+   {id:'FR-D1',title:'Free Duo #1',time:'2026-10-30T19:00:00+05:30',map:'Bermuda',rounds:'Per kill 🪙 1',fee:0,prize:100,slots:24,filled:14},
+   {id:'FR-D2',title:'Free Duo #2',time:'2026-11-02T18:00:00+05:30',map:'Alpine',rounds:'Per kill 🪙 1',fee:0,prize:100,slots:24,filled:4},
+   {id:'FR-D3',title:'Free Duo Sunday',time:'2026-11-08T16:00:00+05:30',map:'Purgatory',rounds:'Per kill 🪙 1',fee:0,prize:150,slots:24,filled:1}],
+  'Squad':[
+   {id:'FR-Q1',title:'Free Squad #1',time:'2026-10-30T20:00:00+05:30',map:'Bermuda',rounds:'Per kill 🪙 2',fee:0,prize:150,slots:12,filled:11},
+   {id:'FR-Q2',title:'Free Squad #2',time:'2026-11-03T19:00:00+05:30',map:'Kalahari',rounds:'Per kill 🪙 2',fee:0,prize:150,slots:12,filled:5},
+   {id:'FR-Q3',title:'Free Squad Sunday',time:'2026-11-08T17:00:00+05:30',map:'Nexterra',rounds:'Per kill 🪙 2',fee:0,prize:200,slots:12,filled:0}]
+ }}
+};
+/* ---- admin panel overrides (edited / added / deleted matches) ---- */
+try{lsSet('bbBase',JSON.parse(JSON.stringify(GROUPS)))}catch(e){}
+(function(G,a){const ed=a.matchEdits||{},del=a.deleted||[];for(const g in G)for(const m in G[g].matches)G[g].matches[m]=G[g].matches[m].filter(x=>!del.includes(x.id)).map(x=>Object.assign(x,ed[x.id]||{}));(a.custom||[]).forEach(c=>{if(G[c.g]&&G[c.g].matches[c.mode]&&!del.includes(c.m.id))G[c.g].matches[c.mode].push(Object.assign({},c.m,ed[c.m.id]||{}))})})(GROUPS,lsGet('bbAdmin',{}));
+let matchGroup='cs',matchTab='Solo Custom',freeTab='Solo';
+function fmtTime(iso){return new Date(iso).toLocaleString('en-IN',{timeZone:'Asia/Kolkata',weekday:'short',day:'numeric',month:'short',hour:'numeric',minute:'2-digit',hour12:true})}
+function tabsHtml(g,cur,mk){return Object.keys(GROUPS[g].modes).map(m=>`<button class="mtab ${m===cur?'active':''}" onclick="${mk(m)}">${m.toUpperCase()} (${GROUPS[g].matches[m].length})</button>`).join('')}
+function listHtml(g,mode){
+  const info=GROUPS[g].modes[mode];
+  return GROUPS[g].matches[mode].map((m,i)=>{
+    const ph=phaseOf(m.time),over=ph!=='up'&&!hasJoined(m.id),f=filledOf(m),mine=hasJoined(m.id),full=(f>=m.slots&&!mine)||over,pct=Math.min(100,Math.round(f/m.slots*100)),left=m.slots-f;
+    const st=mine?['open','YOU’RE IN']:over?(ph==='live'?['live','STARTED']:['full','ENDED']):full?['full','FULL']:pct>=70?['fast','FILLING FAST']:['open','OPEN'];
+    return `<div class="match ${full?'is-full':''}"><div><div class="match-top"><span class="match-no">MATCH ${i+1}</span><span class="badge ${st[0]}">${st[1]}</span></div><h4>${esc(m.title)}</h4>
+    <div class="match-meta"><span>🕘 <b>${fmtTime(m.time)}</b></span><span>🗺 <b>${esc(m.map)}</b></span><span>⚔ <b>${info.fmt} · ${esc(m.rounds)}</b></span></div>
+    <div class="slot-bar"><i style="width:${pct}%"></i></div><div class="slot-txt">${f}/${m.slots} ${info.team} joined · ${full?'No slots left':left+' slot'+(left>1?'s':'')+' left'}</div></div>
+    <div class="match-side"><div class="match-prize"><small>PRIZE POOL</small><strong class="coin">${bc(m.prize)}</strong></div><div class="match-fee">Entry: ${m.fee?bc(m.fee):'FREE'}</div>
+    <button class="btn btn-primary" ${full||mine?'disabled':''} onclick="joinMatch('${g}','${mode}','${m.id}')">${mine?'✓ REGISTERED':over?(ph==='live'?'MATCH STARTED':'MATCH ENDED'):full?'MATCH FULL':m.fee?'JOIN MATCH →':'JOIN FREE →'}</button></div></div>`}).join('');
+}
+function renderMatches(){
+  const G=GROUPS[matchGroup],info=G.modes[matchTab];
+  document.getElementById('matchKicker').textContent=G.label;
+  document.getElementById('matchTabs').innerHTML=tabsHtml(matchGroup,matchTab,m=>`openMatches('${matchGroup}','${m}')`);
+  document.getElementById('matchTitle').textContent=matchTab+' Matches';
+  document.getElementById('matchDesc').textContent=info.fmt+' · '+G.cat+' · '+info.per+(info.per>1?' players per team':' player');
+  document.getElementById('matchList').innerHTML=listHtml(matchGroup,matchTab);
+}
+function renderFree(){
+  document.getElementById('freeTabs').innerHTML=tabsHtml('fr',freeTab,m=>`setFree('${m}')`);
+  document.getElementById('freeList').innerHTML=listHtml('fr',freeTab);
+}
+function setFree(m){freeTab=m;renderFree()}
+function refreshMatchViews(){if(document.getElementById('matchBackdrop').classList.contains('open'))renderMatches();renderFree()}
+function openMatches(g,mode){matchGroup=g;matchTab=mode||Object.keys(GROUPS[g].modes)[0];renderMatches();document.getElementById('matchBackdrop').classList.add('open')}
+function closeMatches(){document.getElementById('matchBackdrop').classList.remove('open')}
+function joinMatch(g,mode,id){const m=GROUPS[g].matches[mode].find(x=>x.id===id);if(!m)return;closeMatches();requestJoin(Object.assign({category:GROUPS[g].cat,mode},m))}
+['cs','fm'].forEach(g=>Object.keys(GROUPS[g].modes).forEach(k=>{const el=document.getElementById((g==='cs'?'cnt-':'cntf-')+k.split(' ')[0].toLowerCase());if(el)el.textContent=GROUPS[g].matches[k].length+' Matches'}));
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();closeMatches();closeDrawer()}});
+renderFree();updateNav();
+if(pendingRef&&!currentUser())setTimeout(()=>{openAuth('register');setMsg('info','Referral code '+pendingRef+' applied. Create your account to continue.')},300);
+</script>
+</body></html>
