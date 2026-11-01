@@ -17,6 +17,16 @@ jobs:
       - run: mkdir www && cp index*.html www/index.html
       - run: npm install
       - run: npx cap add android
+      - name: App icon
+        if: hashFiles('icon.png') != ''
+        run: |
+          rm -rf android/app/src/main/res/mipmap-anydpi-v26
+          for s in mdpi:48 hdpi:72 xhdpi:96 xxhdpi:144 xxxhdpi:192; do
+            d=${s%%:*}; p=${s##*:}
+            for f in ic_launcher ic_launcher_round ic_launcher_foreground; do
+              convert icon.png -resize ${p}x${p} android/app/src/main/res/mipmap-$d/$f.png
+            done
+          done
       - run: npx cap sync android
       - name: Build APK
         working-directory: android
